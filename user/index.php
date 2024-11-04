@@ -3,6 +3,7 @@
     require_once("../config/koneksi.php");
     $userid = $_SESSION['userid'];
     $nama = $_SESSION['nama'];
+    $role = $_SESSION['role']; // 'admin' atau 'user'
 
     if ($_SESSION['status'] != 'login') {
         echo "<script>
@@ -66,14 +67,13 @@
                                             <?php
                                                 $fotoid = $data['id_foto'];
                                                 $ceksuka = mysqli_query($koneksi, "SELECT * FROM like_foto WHERE id_foto='$fotoid' AND id_user='$userid'");
-                                                
                                                 $like = mysqli_query($koneksi, "SELECT * FROM like_foto WHERE id_foto='$fotoid'");
                                                 if (mysqli_num_rows($ceksuka) == 1) { ?>
                                                     <a style="float: right; color: red; text-decoration: none;" href="../config/proses_like.php?fotoid=<?php echo $data['id_foto'] ?>" type="submit" name="batalsuka"><i class="fa fa-heart fa-2x"></i><?php echo mysqli_num_rows($like); ?></a>
                                                 <?php } else { ?>
                                                     <a style="float: right; color: red; text-decoration: none;" href="../config/proses_like.php?fotoid=<?php echo $data['id_foto'] ?>" type="submit" name="suka"><i class="fa fa-heart-o fa-2x"></i><?php echo mysqli_num_rows($like); ?></a>
                                                 <?php } ?>
-                                                
+                                            
                                             <strong><?php echo $data['judul_foto'] ?></strong><br>
                                             <span class="badge bg-secondary"><?php echo $data['nama_lengkap'] ?></span>
                                             <span class="badge bg-secondary"><?php echo $data['tanggal_unggah'] ?></span>
@@ -90,6 +90,13 @@
                                                 <p align="left">
                                                     <strong><?php echo $row['nama_lengkap'] ?> :</strong>
                                                     <?php echo $row['isi_komentar'] ?>
+
+                                                    <!-- Tampilkan tombol hapus hanya jika user adalah admin atau pemilik komentar -->
+                                                    <?php if ($role == 'admin' || $row['id_user'] == $userid) { ?>
+                                                        <a style="float: right; color: red; text-decoration: none;" href="../config/hapus_komentar.php?komentarid=<?php echo $row['id_komentar'] ?>" type="submit" name="hapuskomen">
+                                                            <i class="fa fa-trash"></i>
+                                                        </a>
+                                                    <?php } ?>
                                                 </p>
                                             <?php } ?>
                                         <hr>
@@ -97,7 +104,7 @@
                                             <form action="../config/proses_komentar.php" method="POST">
                                                 <div class="input-group">
                                                     <input type="hidden" name="fotoid" value="<?php echo $data['id_foto'] ?>">
-                                                    <input type="text" class="form-control" name="isikomentar" placeholder="Tambah Komentar">
+                                                    <input type="text" class="form-control" name="isikomentar" placeholder="Tambah Komentar" required>
                                                     <div class="input-group-prepend">
                                                         <button type="submit" class="btn btn-primary" name="kirimkomentar">Kirim</button>
                                                     </div>

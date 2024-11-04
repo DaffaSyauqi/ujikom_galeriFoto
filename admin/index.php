@@ -100,7 +100,7 @@
                                             <form action="../config/proses_komentar.php" method="POST">
                                                 <div class="input-group">
                                                     <input type="hidden" name="fotoid" value="<?php echo $data['id_foto'] ?>">
-                                                    <input type="text" class="form-control" name="isikomentar" placeholder="Tambah Komentar">
+                                                    <input type="text" class="form-control" name="isikomentar" placeholder="Tambah Komentar" required>
                                                     <div class="input-group-prepend">
                                                         <button type="submit" class="btn btn-primary" name="kirimkomentar">Kirim</button>
                                                     </div>

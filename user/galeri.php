@@ -102,40 +102,5 @@
         </div>
     </div>
     <script src="../assets/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Check if dark mode is already enabled
-        if (localStorage.getItem('dark-mode') === 'enabled') {
-            document.body.classList.add('bg-dark', 'text-light');
-            document.getElementById('navbar').classList.add('bg-dark', 'navbar-dark', 'text-light');
-            document.getElementById('mode-icon').classList.remove('fa-moon-o');
-            document.getElementById('mode-icon').classList.add('fa-sun-o');
-        }
-
-        document.getElementById('toggle-dark-mode').addEventListener('click', function() {
-            const body = document.getElementById('body');
-            const navbar = document.getElementById('navbar');
-            const modeIcon = document.getElementById('mode-icon');
-
-            // Toggle dark mode classes
-            body.classList.toggle('bg-dark');
-            body.classList.toggle('text-light');
-            navbar.classList.toggle('bg-dark');
-            navbar.classList.toggle('navbar-dark');
-            navbar.classList.toggle('text-light');
-            navbar.classList.toggle('bg-light');
-            navbar.classList.toggle('navbar-light');
-
-            // Check if dark mode is enabled and update icon and localStorage
-            if (body.classList.contains('bg-dark')) {
-                modeIcon.classList.remove('fa-moon-o');
-                modeIcon.classList.add('fa-sun-o');
-                localStorage.setItem('dark-mode', 'enabled'); // Set dark mode
-            } else {
-                modeIcon.classList.remove('fa-sun-o');
-                modeIcon.classList.add('fa-moon-o');
-                localStorage.setItem('dark-mode', 'disabled'); // Remove dark mode
-            }
-        });
-    </script>
 </body>
 </html>
