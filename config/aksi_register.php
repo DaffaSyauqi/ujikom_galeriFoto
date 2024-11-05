@@ -20,7 +20,7 @@
         echo "<script>
             document.addEventListener('DOMContentLoaded', function() {
                 Swal.fire({
-                    title: 'Kerja Bagus!',
+                    title: 'Berhasil!',
                     text: 'Pendaftaran Berhasil',
                     icon: 'success'
                 }).then(function() {

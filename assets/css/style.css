@@ -8,63 +8,62 @@
 }
 
 body {
-    padding-top: 80px; /* Tambahkan padding untuk mencegah konten halaman tertutup navbar */
+    padding-top: 80px;
 }
 
 .navbar-custom {
-    height: 80px; /* Ubah tinggi navbar */
-    padding: 20px 0; /* Atur padding atas dan bawah */
-    font-size: 1rem; /* Memperbesar ukuran font */
+    height: 80px; 
+    padding: 20px 0;
+    font-size: 1rem;
 }
 
 .navbar-custom .navbar-brand {
-    font-size: 1.5rem; /* Memperbesar ukuran font brand */
+    font-size: 1.5rem;
 }
 
 .navbar-custom .nav-link {
-    font-size: 1.25rem; /* Memperbesar ukuran font link */
+    font-size: 1.25rem;
 }
 
 .container-img {
-    width: 100%; /* Menggunakan width 100% agar responsif */
-    max-width: 1200px; /* Membatasi lebar maksimum */
+    width: 100%;
+    max-width: 1200px;
     margin: 20px auto;
-    columns: 4; /* Menampilkan 4 kolom */
-    column-gap: 10px; /* Jarak antar kolom */
+    columns: 4;
+    column-gap: 10px;
 }
 
 .container-img .box {
     width: 100%;
     margin-bottom: 10px;
-    break-inside: avoid; /* Menghindari elemen terpecah di antara kolom */
+    break-inside: avoid;
 }
 
 .container-img .box img {
     max-width: 100%;
-    border-radius: 15px; /* Membuat gambar memiliki sudut yang melengkung */
+    border-radius: 15px;
 }
 
 @media (max-width: 768px) {
     .container-img {
-        columns: 2; /* Menampilkan 2 kolom pada layar lebih kecil */
+        columns: 2; 
     }
 }
 
 @media (max-width: 480px) {
     .container-img {
-        columns: 1; /* Menampilkan 1 kolom pada layar sangat kecil */
+        columns: 1;
     }
 }
 
 .modal-content {
     background: transparent;
-    box-shadow: none; /* Menghapus bayangan jika diperlukan */
-    border: none; /* Menghapus border jika ada */
+    box-shadow: none;
+    border: none;
 }
 
-/* Mengatur tampilan background di dalam wrapper agar tetap terlihat */
 .wrapper {
-    background: #ecf0f3; /* Warna background wrapper tetap */
+    background: #ecf0f3;
     padding: 40px 30px 30px 30px;
     border-radius: 15px;
 }
@@ -86,7 +85,6 @@ body {
     font-size: 1.2rem;
     color: #666;
     padding: 10px 15px 10px 10px;
-    /* border: 1px solid red; */
 }
 
 .wrapper .form-field {
@@ -114,11 +112,4 @@ body {
 
 .wrapper .btn:hover {
     background-color: #039BE5;
-}
-
-@media(max-width: 380px) {
-    .wrapper {
-        margin: 30px 20px;
-        padding: 40px 15px 15px 15px;
-    }
 }
