@@ -128,3 +128,22 @@ body {
     font-size: 14px;
     color: #555;
 }
+
+/* Ubah warna latar belakang pagination */
+.pagination .page-link {
+    background-color: #f8d7da; /* Ganti dengan warna yang Anda inginkan */
+    color: #721c24; /* Ganti dengan warna teks yang diinginkan */
+}
+
+/* Warna untuk item yang sedang aktif */
+.pagination .page-item.active .page-link {
+    background-color: #dc3545; /* Warna latar aktif */
+    color: #fff; /* Warna teks aktif */
+    border-color: #dc3545;
+}
+
+/* Warna untuk item pagination saat hover */
+.pagination .page-link:hover {
+    background-color: #f5c6cb; /* Warna saat hover */
+    color: #721c24;
+}

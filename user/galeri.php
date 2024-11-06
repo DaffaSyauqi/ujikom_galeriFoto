@@ -1,6 +1,7 @@
 <?php
     session_start();
     require_once("../config/koneksi.php");
+
     if($_SESSION['status'] != 'login') {
         echo "<script>
             alert('Anda belum login');
@@ -10,6 +11,24 @@
 
     $userid = $_SESSION['userid'];
     $nama = $_SESSION['nama'];
+
+    // Jumlah data per halaman
+    $limit = 8;
+
+    // Mendapatkan jumlah total data
+    $query_total = mysqli_query($koneksi, "SELECT COUNT(*) AS total FROM foto WHERE id_user='$userid'");
+    $data_total = mysqli_fetch_assoc($query_total);
+    $total_data = $data_total['total'];
+
+    // Hitung jumlah total halaman
+    $total_pages = ceil($total_data / $limit);
+
+    // Mendapatkan halaman saat ini
+    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+    $start = ($page - 1) * $limit;
+
+    // Query untuk data pada halaman saat ini
+    $query = mysqli_query($koneksi, "SELECT * FROM foto WHERE id_user='$userid' LIMIT $start, $limit");
 ?>
 
 <!DOCTYPE html>
@@ -42,65 +61,43 @@
     </nav>
 
     <div class="container pt-3">
-        Album :
-        <a href="galeri.php" class="btn btn-outline-danger">Semua Foto</a>
-        <?php
-            $query = mysqli_query($koneksi, "SELECT * FROM album WHERE id_user='$userid'");
-            while($row = mysqli_fetch_array($query)) { ?>
-                <a href="galeri.php?albumid=<?php echo $row['id_album'] ?>" class="btn btn-outline-danger">
-                    <?php echo $row['nama_album'] ?>
-                </a>
-            <?php } ?>
-
         <div class="row">
-            <?php
-            if(isset($_GET['albumid'])) {
-                $albumid = $_GET['albumid'];
-                $query = mysqli_query($koneksi, "SELECT * FROM foto WHERE id_user='$userid' AND id_album='$albumid'");
-                while($data = mysqli_fetch_array($query)) { ?>
-                    <div class="col-md-3 mt-2">
-                        <div class="card mb-2">
-                            <img src="../assets/img/<?php echo $data['lokasi_file']?>" class="card-img-top" title="<?php echo $data['judul_foto']?>" style="height:12rem;">
-                            <div class="card-footer text-center">
-                                <a style="color: red"><i class="fa fa-heart"></i></a>
-                                <?php
-                                    $fotoid = $data['id_foto'];
-                                    $like = mysqli_query($koneksi, "SELECT * FROM like_foto WHERE id_foto='$fotoid'");
-                                    echo mysqli_num_rows($like). ' Suka';
-                                ?>
-                                <a style="color: blue"><i class="fa fa-comment"></i></a>
-                                <?php
-                                    $jmlkomen = mysqli_query($koneksi, "SELECT * FROM komentar_foto WHERE id_foto='$fotoid'");
-                                    echo mysqli_num_rows($jmlkomen). ' Komentar';
-                                ?>
-                            </div>
+            <?php while($data = mysqli_fetch_array($query)) { ?>
+                <div class="col-md-3 mt-2">
+                    <div class="card mb-2">
+                        <img src="../assets/img/<?php echo $data['lokasi_file']?>" class="card-img-top" title="<?php echo $data['judul_foto']?>" style="height:12rem;">
+                        <div class="card-footer text-center">
+                            <a style="color: red"><i class="fa fa-heart"></i></a>
+                            <?php 
+                                $fotoid = $data['id_foto'];
+                                $like = mysqli_query($koneksi, "SELECT * FROM like_foto WHERE id_foto='$fotoid'");
+                                echo mysqli_num_rows($like). ' Suka';
+                            ?>
+                            <a style="color: blue"><i class="fa fa-comment"></i></a>
+                            <?php
+                                $jmlkomen = mysqli_query($koneksi, "SELECT * FROM komentar_foto WHERE id_foto='$fotoid'");
+                                echo mysqli_num_rows($jmlkomen). ' Komentar';
+                            ?>
                         </div>
                     </div>
-            <?php } }  else { 
-                $query = mysqli_query($koneksi, "SELECT * FROM  foto WHERE id_user='$userid'");
-                while($data = mysqli_fetch_array($query)) {
-            ?>
-            <div class="col-md-3 mt-2">
-                <div class="card">
-                    <img src="../assets/img/<?php echo $data['lokasi_file']?>" class="card-img-top" title="<?php echo $data['judul_foto']?>" style="height:12rem;">
-                    <div class="card-footer text-center">
-                        <a style="color: red"><i class="fa fa-heart"></i></a>
-                        <?php 
-                            $fotoid = $data['id_foto'];
-                            $like = mysqli_query($koneksi, "SELECT * FROM like_foto WHERE id_foto='$fotoid'");
-                            echo mysqli_num_rows($like). ' Suka';
-                        ?>
-                        <a style="color: blue"><i class="fa fa-comment"></i></a>
-                        <?php
-                            $jmlkomen = mysqli_query($koneksi, "SELECT * FROM komentar_foto WHERE id_foto='$fotoid'");
-                            echo mysqli_num_rows($jmlkomen). ' Komentar';
-                         ?>
-                    </div>
                 </div>
-            </div>
-            <?php } } ?>
+            <?php } ?>
         </div>
+        
+        <!-- Tampilkan pagination jika ada lebih dari 1 halaman -->
+        <?php if ($total_pages > 1): ?>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center mt-4">
+                    <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                        <li class="page-item <?php if ($page == $i) echo 'active'; ?>">
+                            <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                        </li>
+                    <?php endfor; ?>
+                </ul>
+            </nav>
+        <?php endif; ?>
     </div>
+    
     <script src="../assets/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
