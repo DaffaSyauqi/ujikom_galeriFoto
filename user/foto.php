@@ -1,17 +1,16 @@
 <?php
     session_start();
     require_once("../config/koneksi.php");
-
-    $userid = $_SESSION['userid'];
-    $nama = $_SESSION['nama'];
-    
     if($_SESSION['status'] != 'login') {
         echo "<script>
-            alert('Anda belum login');
-            location.href='../index.php';
+        alert('Anda belum login');
+        location.href='../index.php';
         </script>";
     }
-?>
+    
+    $userid = $_SESSION['userid'];
+    $nama = $_SESSION['nama'];
+    ?>
 
 <!DOCTYPE html>
 <html lang="en">

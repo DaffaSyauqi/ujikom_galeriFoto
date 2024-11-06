@@ -1,14 +1,14 @@
 <?php
     session_start();
     require_once("../config/koneksi.php");
-    $nama = $_SESSION['nama'];
-
     if($_SESSION['status'] != 'login') {
         echo "<script>
             alert('Anda belum login');
             location.href='../index.php';
         </script>";
     }
+
+    $nama = $_SESSION['nama'];
 ?>
 
 <!DOCTYPE html>
