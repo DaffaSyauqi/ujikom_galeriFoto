@@ -26,7 +26,7 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top navbar-custom shadow">
         <div class="container">
-            <a class="fs-1 text-primary" href="index.php" style="text-decoration: none">Galeri Foto</a>
+            <a class="fs-1 text-danger" href="index.php" style="text-decoration: none">Galeri Foto</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -38,7 +38,7 @@
                     <a href="user.php" class="nav-link">User</a>
                 </div>
                 <p class="m-1">Hello, <?php echo $nama ?></p>
-                <a href="../config/aksi_logout.php" class="btn btn-primary m-1 rounded-pill">Keluar</a>
+                <a href="../config/aksi_logout.php" class="btn btn-danger m-1 rounded-pill">Keluar</a>
             </div>
         </div>
     </nav>
@@ -84,7 +84,7 @@
                                         <strong><?php echo $data['judul_foto'] ?></strong><br>
                                             <span class="badge bg-secondary"><?php echo $data['nama_lengkap'] ?></span>
                                             <span class="badge bg-secondary"><?php echo $data['tanggal_unggah'] ?></span>
-                                            <span class="badge bg-primary"><?php echo $data['nama_album'] ?></span>
+                                            <span class="badge bg-secondary"><?php echo $data['nama_album'] ?></span>
                                         </div>
                                         <hr>
                                         <p align="left">
@@ -113,7 +113,7 @@
                                                     <input type="hidden" name="fotoid" value="<?php echo $data['id_foto'] ?>">
                                                     <input type="text" class="form-control" name="isikomentar" placeholder="Tambah Komentar" required>
                                                     <div class="input-group-prepend">
-                                                        <button type="submit" class="btn btn-primary" name="kirimkomentar">Kirim</button>
+                                                        <button type="submit" class="btn btn-danger" name="kirimkomentar">Kirim</button>
                                                     </div>
                                                 </div>
                                             </form>

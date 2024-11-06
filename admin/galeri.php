@@ -25,7 +25,7 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top navbar-custom shadow">
     <div class="container">
-        <a class="fs-1 text-primary" href="index.php" style="text-decoration: none">Galeri Foto</a>
+        <a class="fs-1 text-danger" href="index.php" style="text-decoration: none">Galeri Foto</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
@@ -37,18 +37,18 @@
                 <a href="user.php" class="nav-link">User</a>
             </div>
             <p class="m-1">Hello, <?php echo $nama ?></p>
-            <a href="../config/aksi_logout.php" class="btn btn-primary m-1 rounded-pill">Keluar</a>
+            <a href="../config/aksi_logout.php" class="btn btn-danger m-1 rounded-pill">Keluar</a>
         </div>
     </div>
     </nav>
 
     <div class="container pt-3">
         Album :
-        <a href="galeri.php" class="btn btn-outline-primary">Semua Foto</a>
+        <a href="galeri.php" class="btn btn-outline-danger">Semua Foto</a>
         <?php
             $query = mysqli_query($koneksi, "SELECT * FROM album");
             while($row = mysqli_fetch_array($query)) { ?>
-                <a href="galeri.php?albumid=<?php echo $row['id_album'] ?>" class="btn btn-outline-primary">
+                <a href="galeri.php?albumid=<?php echo $row['id_album'] ?>" class="btn btn-outline-danger">
                     <?php echo $row['nama_album'] ?>
                 </a>
             <?php } ?>

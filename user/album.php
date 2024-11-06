@@ -23,7 +23,7 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top navbar-custom shadow">
     <div class="container">
-        <a class="fs-1 text-primary" href="index.php" style="text-decoration: none">Galeri Foto</a>
+        <a class="fs-1 text-danger" href="index.php" style="text-decoration: none">Galeri Foto</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
@@ -34,7 +34,7 @@
            <a href="foto.php" class="nav-link">Foto</a>
         </div>
         <p class="m-1">Hello, <?php echo $nama ?></p>
-        <a href="../config/aksi_logout.php" class="btn btn-primary m-1 rounded-pill">Keluar</a>
+        <a href="../config/aksi_logout.php" class="btn btn-danger m-1 rounded-pill">Keluar</a>
         </div>
     </div>
     </nav>
@@ -71,7 +71,7 @@
 
         <div class="row pt-3">
             <table class="table table-hover text-center align-middle">
-                <thead >
+                <thead>
                     <tr>
                         <th>#</th>
                         <th>Nama Album</th>
@@ -88,7 +88,7 @@
                         $sql = mysqli_query($koneksi, $query);
                         while($data = mysqli_fetch_array($sql)) {
                     ?>
-                    <tr class="">
+                    <tr>
                         <td><?php echo $no++ ?></td>
                         <td><?php echo $data['nama_album'] ?></td>
                         <td><?php echo $data['deskripsi'] ?></td>
