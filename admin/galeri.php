@@ -20,12 +20,10 @@
     $userid = $_SESSION['userid'];
     $nama = $_SESSION['nama'];
 
-    // Tentukan jumlah foto per halaman
     $limit = 8;
     $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
     $offset = ($page - 1) * $limit;
 
-    // Query untuk jumlah total foto
     if (isset($_GET['albumid'])) {
         $albumid = $_GET['albumid'];
         $totalQuery = mysqli_query($koneksi, "SELECT COUNT(*) as total FROM foto WHERE id_album='$albumid'");
@@ -36,7 +34,6 @@
     $totalData = $totalRow['total'];
     $totalPages = ceil($totalData / $limit);
 
-    // Query untuk foto dengan limit dan offset
     if (isset($_GET['albumid'])) {
         $query = mysqli_query($koneksi, "SELECT * FROM foto WHERE id_album='$albumid' LIMIT $offset, $limit");
     } else {
@@ -66,7 +63,6 @@
                     <a href="galeri.php" class="nav-link active">Galeri</a>
                     <a href="album.php" class="nav-link">Album</a>
                     <a href="foto.php" class="nav-link">Foto</a>
-                    <a href="user.php" class="nav-link">User</a>
                 </div>
                 <p class="m-1">Hello, <?php echo $nama ?></p>
                 <a href="../config/aksi_logout.php" class="btn btn-danger m-1 rounded-pill">Keluar</a>
@@ -74,35 +70,52 @@
         </div>
     </nav>
 
-    <div class="container pt-3">
-        Album :
-        <a href="galeri.php" class="btn btn-outline-danger">Semua Foto</a>
-        <?php
-            $albumQuery = mysqli_query($koneksi, "SELECT * FROM album");
-            while($row = mysqli_fetch_array($albumQuery)) { ?>
-                <a href="galeri.php?albumid=<?php echo $row['id_album'] ?>" class="btn btn-outline-danger">
-                    <?php echo $row['nama_album'] ?>
-                </a>
-        <?php } ?>
-
-        <div class="row">
+    <div class="container pt-5 mt-4">
+        <div class="d-flex align-items-center">
+            <span>Album:</span>
+            <a href="galeri.php" class="btn btn-outline-danger ms-2">Semua Foto</a>
             <?php
-            while ($data = mysqli_fetch_array($query)) { ?>
+                $albumQuery = mysqli_query($koneksi, "SELECT * FROM album");
+                while($row = mysqli_fetch_array($albumQuery)) { ?>
+                    <a href="galeri.php?albumid=<?php echo $row['id_album'] ?>" class="btn btn-outline-danger ms-2">
+                        <?php echo $row['nama_album'] ?>
+                    </a>
+            <?php } ?>
+        </div>
+
+        <div class="row mt-3">
+            <?php while ($data = mysqli_fetch_array($query)) { ?>
                 <div class="col-md-3 mt-2">
-                    <div class="card mb-2">
-                        <img src="../assets/img/<?php echo $data['lokasi_file'] ?>" class="card-img-top" title="<?php echo $data['judul_foto'] ?>" style="height:12rem;">
+                    <div class="card shadow-lg mb-4">
+                        <img src="../assets/img/<?php echo $data['lokasi_file'] ?>" 
+                             class="card-img-top" 
+                             title="<?php echo $data['judul_foto'] ?>" 
+                             style="height:15rem; object-fit:cover; border-radius:8px 8px 0 0;">
+                        
+                        <div class="card-body text-center">
+                            <h6 class="card-title text-truncate"><?php echo $data['judul_foto'] ?></h6>
+                        </div>
+
                         <div class="card-footer text-center">
-                            <a style="color: red"><i class="fa fa-heart"></i></a>
-                            <?php
-                                $fotoid = $data['id_foto'];
-                                $like = mysqli_query($koneksi, "SELECT * FROM like_foto WHERE id_foto='$fotoid'");
-                                echo mysqli_num_rows($like) . ' Suka';
-                            ?>
-                            <a style="color: blue"><i class="fa fa-comment"></i></a>
-                            <?php
-                                $jmlkomen = mysqli_query($koneksi, "SELECT * FROM komentar_foto WHERE id_foto='$fotoid'");
-                                echo mysqli_num_rows($jmlkomen) . ' Komentar';
-                            ?>
+                            <div class="mb-2">
+                                <a class="text-danger">
+                                    <i class="fa fa-heart"></i>
+                                </a>
+                                <?php
+                                    $fotoid = $data['id_foto'];
+                                    $like = mysqli_query($koneksi, "SELECT * FROM like_foto WHERE id_foto='$fotoid'");
+                                    echo "<span>" . mysqli_num_rows($like) . " Suka</span>";
+                                ?>
+                            </div>
+                            <div>
+                                <a class="text-primary">
+                                    <i class="fa fa-comment"></i>
+                                </a>
+                                <?php
+                                    $jmlkomen = mysqli_query($koneksi, "SELECT * FROM komentar_foto WHERE id_foto='$fotoid'");
+                                    echo "<span>" . mysqli_num_rows($jmlkomen) . " Komentar</span>";
+                                ?>
+                            </div>
                         </div>
                     </div>
                 </div>
