@@ -1,11 +1,19 @@
 <?php
     session_start();
     require_once("../config/koneksi.php");
-    if ($_SESSION['status'] != 'login') {
+    if (!isset($_SESSION['status']) || $_SESSION['status'] != 'login') {
         echo "<script>
-            alert('Anda belum login');
-            location.href='../index.php';
+            window.addEventListener('load', function() {
+                Swal.fire({
+                    title: 'Gagal Masuk!',
+                    text: 'Anda Belum Login',
+                    icon: 'error'
+                }).then(function() {
+                    window.location.href = '../index.php';
+                });
+            });
         </script>";
+        exit();
     }
 
     $userid = $_SESSION['userid'];
@@ -22,6 +30,7 @@
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top navbar-custom shadow">

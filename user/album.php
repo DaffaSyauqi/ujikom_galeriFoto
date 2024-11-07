@@ -1,11 +1,19 @@
 <?php
     session_start();
     require_once("../config/koneksi.php");
-    if($_SESSION['status'] != 'login') {
+    if (!isset($_SESSION['status']) || $_SESSION['status'] != 'login') {
         echo "<script>
-            alert('Anda belum login');
-            location.href='../index.php';
+            window.addEventListener('load', function() {
+                Swal.fire({
+                    title: 'Gagal Masuk!',
+                    text: 'Anda Belum Login',
+                    icon: 'error'
+                }).then(function() {
+                    window.location.href = '../index.php';
+                });
+            });
         </script>";
+        exit();
     }
     
     $nama = $_SESSION['nama'];
