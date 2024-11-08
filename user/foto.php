@@ -98,6 +98,7 @@
                         <th>Foto</th>
                         <th>Judul Foto</th>
                         <th>Deskripsi</th>
+                        <th>Album</th>
                         <th>Tanggal</th>
                         <th>Aksi</th>
                     </tr>
@@ -105,7 +106,7 @@
                 <tbody class="table-group-divider">
                     <?php
                         $no = 1;
-                        $query = "SELECT * from foto  WHERE id_user='$userid'";
+                        $query = "SELECT foto.*, album.nama_album FROM foto INNER JOIN album ON foto.id_album = album.id_album WHERE foto.id_user = '$userid'";
                         $sql = mysqli_query($koneksi, $query);
                         while($data = mysqli_fetch_array($sql)) {
                     ?>
@@ -114,6 +115,7 @@
                         <td><img src="../assets/img/<?php echo $data['lokasi_file'] ?>" width="100"></td>
                         <td><?php echo $data['judul_foto'] ?></td>
                         <td><?php echo $data['deskripsi_foto'] ?></td>
+                        <td><?php echo $data['nama_album'] ?></td>
                         <td><?php echo $data['tanggal_unggah'] ?></td>
                         <td>
                             <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#edit<?php echo $data['id_foto']?>">Edit</button>

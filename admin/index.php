@@ -71,61 +71,75 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="m-2">
-                                        <div class="icon-heart pt-3">
-                                            <?php
-                                                $fotoid = $data['id_foto'];
-                                                $ceksuka = mysqli_query($koneksi, "SELECT * FROM like_foto WHERE id_foto='$fotoid' AND id_user='$userid'");
-                                                
-                                                $like = mysqli_query($koneksi, "SELECT * FROM like_foto WHERE id_foto='$fotoid'");
-                                                if (mysqli_num_rows($ceksuka) == 1) { ?>
-                                                    <a style="float: right; color: red; text-decoration: none;" href="../config/proses_like.php?fotoid=<?php echo $data['id_foto'] ?>" type="submit" name="batalsuka"><i class="fa fa-heart fa-2x"></i></a>
-                                                <?php } else { ?>
-                                                    <a style="float: right; color: red; text-decoration: none;" href="../config/proses_like.php?fotoid=<?php echo $data['id_foto'] ?>" type="submit" name="suka"><i class="fa fa-heart-o fa-2x"></i></a>
-                                                <?php } ?>
-                                            <div class="like-count">
+                                    <div class="icon-heart pt-3">
+                                        <?php
+                                            $fotoid = $data['id_foto'];
+                                            $ceksuka = mysqli_query($koneksi, "SELECT * FROM like_foto WHERE id_foto='$fotoid' AND id_user='$userid'");
+                                            $like = mysqli_query($koneksi, "SELECT * FROM like_foto WHERE id_foto='$fotoid'");
+
+                                            echo '<a style="float: left; color: black; text-decoration: none; margin-right: 10px;" 
+                                                    href="../assets/img/' . $data['lokasi_file'] . '" download="' . $data['judul_foto'] . '">
+                                                    <i class="fa fa-arrow-circle-down fa-2x"></i>
+                                                </a>';
+
+                                            echo '<div style="float: right; display: flex; align-items: center;">';
+                                            if (mysqli_num_rows($ceksuka) == 1) { ?>
+                                                <a style="color: red; text-decoration: none;" 
+                                                href="../config/proses_like.php?fotoid=<?php echo $data['id_foto'] ?>" 
+                                                type="submit" name="batalsuka">
+                                                <i class="fa fa-heart fa-2x"></i>
+                                                </a>
+                                            <?php } else { ?>
+                                                <a style="color: red; text-decoration: none;" 
+                                                href="../config/proses_like.php?fotoid=<?php echo $data['id_foto'] ?>" 
+                                                type="submit" name="suka">
+                                                <i class="fa fa-heart-o fa-2x"></i>
+                                                </a>
+                                            <?php } ?>
+                                            <div class="like-count" style="margin-left: 5px; font-size: 18px;">
                                                 <?php echo mysqli_num_rows($like); ?>
                                             </div>
-                                                
-                                        </div>
-
-                                        <div class="sticky pt-5 text-center">
+                                            </div>
+                                    </div>
+                                    <div class="sticky pt-5 text-center">
+                                        <hr>
                                         <strong><?php echo $data['judul_foto'] ?></strong><br>
-                                            <span class="badge bg-secondary"><?php echo $data['nama_lengkap'] ?></span>
-                                            <span class="badge bg-secondary"><?php echo $data['tanggal_unggah'] ?></span>
-                                            <span class="badge bg-secondary"><?php echo $data['nama_album'] ?></span>
-                                        </div>
-                                        <hr>
-                                        <p align="left">
-                                            <?php echo $data['deskripsi_foto'] ?>
-                                        </p>
-                                        <hr>
-                                        
-                                        <?php
-                                            $komentar = mysqli_query($koneksi, "SELECT * FROM komentar_foto INNER JOIN user ON komentar_foto.id_user=user.id_user WHERE komentar_foto.id_foto = '$fotoid'");
-                                            while ($row = mysqli_fetch_array($komentar)) { ?>
-                                                <p align="left">
-                                                    <strong><?php echo $row['nama_lengkap'] ?> :</strong>
-                                                    <?php echo $row['isi_komentar'] ?>
-                                                    <?php if ($role == 'admin' || $row['id_user'] == $userid) { ?>
-                                            <a style="float: right; color: red; text-decoration: none;" href="../config/hapus_komentar.php?komentarid=<?php echo $row['id_komentar'] ?>" type="submit" name="hapuskomen">
-                                                <i class="fa fa-trash"></i>
-                                            </a>
-                                        <?php } ?>
-                                                </p>
+                                        <span class="badge bg-secondary"><?php echo $data['nama_lengkap'] ?></span>
+                                        <span class="badge bg-secondary"><?php echo $data['tanggal_unggah'] ?></span>
+                                        <span class="badge bg-secondary"><?php echo $data['nama_album'] ?></span>
+                                    </div>
+                                    <hr>
+                                    <p align="left">
+                                        <?php echo $data['deskripsi_foto'] ?>
+                                    </p>
+                                    <hr>
+
+                                    <?php
+                                        $komentar = mysqli_query($koneksi, "SELECT * FROM komentar_foto INNER JOIN user ON komentar_foto.id_user=user.id_user WHERE komentar_foto.id_foto = '$fotoid'");
+                                        while ($row = mysqli_fetch_array($komentar)) { ?>
+                                            <p align="left">
+                                                <strong><?php echo $row['nama_lengkap'] ?> :</strong>
+                                                <?php echo $row['isi_komentar'] ?>
+                                                <?php if ($role == 'admin' || $row['id_user'] == $userid) { ?>
+                                                <a style="float: right; color: red; text-decoration: none;" href="../config/hapus_komentar.php?komentarid=<?php echo $row['id_komentar'] ?>" type="submit" name="hapuskomen">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
                                             <?php } ?>
-                                            
-                                        <hr>
-                                        <div class="sticky-bottom">
-                                            <form action="../config/proses_komentar.php" method="POST">
-                                                <div class="input-group">
-                                                    <input type="hidden" name="fotoid" value="<?php echo $data['id_foto'] ?>">
-                                                    <input type="text" class="form-control" name="isikomentar" placeholder="Tambah Komentar" required>
-                                                    <div class="input-group-prepend">
-                                                        <button type="submit" class="btn btn-danger" name="kirimkomentar">Kirim</button>
-                                                    </div>
+                                            </p>
+                                        <?php } ?>
+                                        
+                                    <hr>
+                                    <div class="sticky-bottom">
+                                        <form action="../config/proses_komentar.php" method="POST">
+                                            <div class="input-group">
+                                                <input type="hidden" name="fotoid" value="<?php echo $data['id_foto'] ?>">
+                                                <input type="text" class="form-control" name="isikomentar" placeholder="Tambah Komentar" required>
+                                                <div class="input-group-prepend">
+                                                    <button type="submit" class="btn btn-danger" name="kirimkomentar">Kirim</button>
                                                 </div>
-                                            </form>
-                                        </div> 
+                                            </div>
+                                        </form>
+                                    </div> 
                                 </div>
                             </div>
                         </div>

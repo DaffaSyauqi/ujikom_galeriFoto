@@ -63,6 +63,7 @@
                     <a href="galeri.php" class="nav-link active">Galeri</a>
                     <a href="album.php" class="nav-link">Album</a>
                     <a href="foto.php" class="nav-link">Foto</a>
+                    <a href="user.php" class="nav-link">User</a>
                 </div>
                 <p class="m-1">Hello, <?php echo $nama ?></p>
                 <a href="../config/aksi_logout.php" class="btn btn-danger m-1 rounded-pill">Keluar</a>
