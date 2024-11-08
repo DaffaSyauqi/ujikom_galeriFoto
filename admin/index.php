@@ -113,7 +113,12 @@
                                         <?php echo $data['deskripsi_foto'] ?>
                                     </p>
                                     <hr>
-
+                                    
+                                    <?php
+                                        $jmlkomen = mysqli_query($koneksi, "SELECT * FROM komentar_foto WHERE id_foto='$fotoid'");
+                                        echo "<h6>" . mysqli_num_rows($jmlkomen) . " Komentar</h6>";
+                                    ?>
+                                    
                                     <?php
                                         $komentar = mysqli_query($koneksi, "SELECT * FROM komentar_foto INNER JOIN user ON komentar_foto.id_user=user.id_user WHERE komentar_foto.id_foto = '$fotoid'");
                                         while ($row = mysqli_fetch_array($komentar)) { ?>
